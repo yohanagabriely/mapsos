@@ -1,0 +1,442 @@
+<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#067D87', /* Verde-água */
+                        'primary-dark': '#B91C1C', /* Manter a cor escura para outros elementos */
+                        'secondary': '#EA580C',
+                        'accent': '#F59E0B',
+                        'success': '#10B981',
+                        'neutral-800': '#F9FAFB',
+                        'neutral-700': '#F3F4F6',
+                        'neutral-600': '#E5E7EB',
+                        'neutral-500': '#6B7280',
+                        'neutral-400': '#9CA3AF',
+                        'neutral-300': '#D1D5DB',
+                        'neutral-200': '#E5E7EB',
+                        'neutral-100': '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+</head>
+<body class="bg-gray-50 font-inter min-h-screen">
+
+   <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
+                    <p class="text-sm text-gray-500">Sistema de Detecção</p>
+                </div>
+            </div>
+            <nav class="space-y-3">
+                <!-- Mapa (link para mapa.html) -->
+                <a href="mapa.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-map text-lg"></i>
+                    <span class="font-medium">Mapa</span>
+                </a>
+
+                <!-- Dados (ativo - verde fixo) -->
+                <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
+                    <i class="fa-solid fa-database text-lg"></i>
+                    <span class="font-semibold">Dados</span>
+                </div>
+
+                <!-- Câmeras (link para camera.html) -->
+                <a href="camera.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-camera text-lg"></i>
+                    <span class="font-medium">Câmeras</span>
+                </a>
+
+                <!-- Histórico (link para historico.html) -->
+                <a href="historico.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+                    <span class="font-medium">Histórico</span>
+                </a>
+            </nav>
+        </div>
+        <div class="absolute bottom-6 left-6 right-6">
+            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-4 border border-primary/20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-3 h-3 bg-success rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-gray-700">Sistema Ativo</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Monitoramento em tempo real</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="ml-72">
+        <!-- Header -->
+        <header id="header" class="bg-white border-b border-gray-200 px-8 py-5 shadow-sm">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900">Painel de Dados</h2>
+                    <p class="text-gray-500 mt-1">Análise e monitoramento de acidentes em tempo real</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <i class="fa-regular fa-bell text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
+                        <span class="absolute -top-2 -right-2 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
+                    </div>
+                    <div class="relative">
+                        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
+                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-12 h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
+                            <div>
+                                <p class="font-semibold text-gray-900">lorena</p>
+                                <p class="text-sm text-gray-500">governo</p>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
+                        </div>
+                        
+                        <!-- Profile Menu Dropdown -->
+                        <div id="profile-menu" class="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50 hidden">
+                            <div class="px-4 py-3 border-b border-gray-100">
+                                <p class="font-semibold text-gray-900">Ana Silva</p>
+                                <p class="text-sm text-gray-500">ana.silva@recife.gov.br</p>
+                            </div>
+                            
+                            <div class="py-2">
+                                <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-user text-gray-500 w-5"></i>
+                                    <span class="ml-3 font-medium">Meu Perfil</span>
+                                </span>
+                                
+                                <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-camera text-gray-500 w-5"></i>
+                                    <span class="ml-3 font-medium">Alterar Foto</span>
+                                </span>
+                                
+                                <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-key text-gray-500 w-5"></i>
+                                    <span class="ml-3 font-medium">Alterar Senha</span>
+                                </span>
+                                
+                                <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-gear text-gray-500 w-5"></i>
+                                    <span class="ml-3 font-medium">Configurações</span>
+                                </span>
+                                
+                                <div class="border-t border-gray-100 mt-2 pt-2">
+                                    <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+                                        <i class="fa-solid fa-sign-in-alt text-gray-500 w-5"></i>
+                                        <span class="ml-3 font-medium">Fazer Login</span>
+                                    </span>
+                                    
+                                    <span class="flex items-center px-4 py-3 text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
+                                        <i class="fa-solid fa-sign-out-alt text-red-500 w-5"></i>
+                                        <span class="ml-3 font-medium">Sair</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="p-8">
+            <!-- Stats Summary -->
+            <section id="stats-summary" class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Acidentes Hoje</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2">23</p>
+                        </div>
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-day text-2xl text-primary"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-success mt-4">-12% vs ontem</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Casos Ativos</p>
+                            <p class="text-3xl font-bold text-secondary mt-2">8</p>
+                        </div>
+                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-exclamation-circle text-2xl text-secondary"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4">Em atendimento</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Tempo Médio</p>
+                            <p class="text-3xl font-bold text-accent mt-2">4.2min</p>
+                        </div>
+                        <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-2xl text-accent"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-success mt-4">-30s vs média</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Taxa Resolução</p>
+                            <p class="text-3xl font-bold text-success mt-2">96.8%</p>
+                        </div>
+                        <div class="w-14 h-14 bg-success/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-check-circle text-2xl text-success"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-success mt-4">+1.2% vs semana</p>
+                </div>
+            </section>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-5 gap-8">
+                <!-- Chart Section -->
+                <section id="chart-section" class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Acidentes por Hora</h3>
+                            <p class="text-sm text-gray-500">Últimas 24 horas</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <select class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option>Hoje</option>
+                                <option>Ontem</option>
+                                <option>Última Semana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="incident-chart-container" class="h-80"></div>
+                </section>
+
+                <!-- Recent Accidents List -->
+                <section id="recent-accidents-section" class="col-span-3">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Últimos Acidentes Detectados</h3>
+                        <div class="flex items-center space-x-4">
+                            <select class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option>Todas as severidades</option>
+                                <option>Alto</option>
+                                <option>Médio</option>
+                                <option>Baixo</option>
+                            </select>
+                            <span class="text-sm text-secondary font-medium cursor-pointer hover:underline">Ver Histórico Completo</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div id="accident-1" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-primary/20">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-red-100 to-red-50 flex items-center justify-center border border-red-200">
+                                <i class="fa-solid fa-car-burst text-2xl text-red-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-1">
+                                    <p class="font-bold text-gray-900 text-lg">Colisão Frontal Grave</p>
+                                    <span class="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded-full border border-red-200">CRÍTICO</span>
+                                </div>
+                                <p class="text-gray-600 mb-2">Av. Mascarenhas de Morais, próximo ao Shopping</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fa-solid fa-clock mr-1"></i>8 min atrás</span>
+                                    <span><i class="fa-solid fa-ambulance mr-1"></i>Ambulância a caminho</span>
+                                    <span><i class="fa-solid fa-users mr-1"></i>3 vítimas</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                        </div>
+                        <div id="accident-2" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-secondary/20">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center border border-orange-200">
+                                <i class="fa-solid fa-person-falling text-2xl text-orange-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-1">
+                                    <p class="font-bold text-gray-900 text-lg">Atropelamento</p>
+                                    <span class="text-xs font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-full border border-orange-200">MÉDIO</span>
+                                </div>
+                                <p class="text-gray-600 mb-2">Rua da Aurora, cruzamento com Rua do Sol</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fa-solid fa-clock mr-1"></i>32 min atrás</span>
+                                    <span><i class="fa-solid fa-check-circle mr-1 text-success"></i>Socorro prestado</span>
+                                    <span><i class="fa-solid fa-user mr-1"></i>1 vítima</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                        </div>
+                        <div id="accident-3" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-accent/20">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-100 to-yellow-50 flex items-center justify-center border border-yellow-200">
+                                <i class="fa-solid fa-traffic-light text-2xl text-yellow-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-1">
+                                    <p class="font-bold text-gray-900 text-lg">Semáforo com Defeito</p>
+                                    <span class="text-xs font-bold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full border border-yellow-200">BAIXO</span>
+                                </div>
+                                <p class="text-gray-600 mb-2">Cruzamento Av. Agamenon Magalhães</p>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fa-solid fa-clock mr-1"></i>1h 15min atrás</span>
+                                    <span><i class="fa-solid fa-tools mr-1"></i>Manutenção notificada</span>
+                                    <span><i class="fa-solid fa-exclamation-triangle mr-1"></i>Trânsito lento</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Profile menu toggle functionality
+        function toggleProfileMenu() {
+            const profileMenu = document.getElementById('profile-menu');
+            profileMenu.classList.toggle('hidden');
+        }
+
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileMenu = document.getElementById('profile-menu');
+            const profileButton = event.target.closest('[onclick="toggleProfileMenu()"]');
+            
+            if (!profileButton && !profileMenu.contains(event.target)) {
+                profileMenu.classList.add('hidden');
+            }
+        });
+
+        // Initialize chart
+        document.addEventListener('DOMContentLoaded', function () {
+            Highcharts.chart('incident-chart-container', {
+                chart: {
+                    type: 'spline',
+                    backgroundColor: 'transparent',
+                    height: '100%',
+                },
+                title: {
+                    text: null
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                    labels: {
+                        style: {
+                            color: '#6B7280',
+                            fontSize: '12px',
+                            fontWeight: '500'
+                        }
+                    },
+                    lineColor: '#E5E7EB',
+                    tickColor: '#E5E7EB'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Número de Ocorrências',
+                        style: {
+                            color: '#6B7280',
+                            fontSize: '13px',
+                            fontWeight: '500'
+                        }
+                    },
+                    labels: {
+                        style: {
+                            color: '#6B7280',
+                            fontSize: '12px'
+                        }
+                    },
+                    gridLineColor: '#F3F4F6'
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    borderColor: '#067D87',
+                    borderRadius: 8,
+                    shadow: true,
+                    style: {
+                        color: '#1F2937',
+                        fontSize: '13px'
+                    },
+                    shared: true,
+                    valueSuffix: ' acidentes'
+                },
+                legend: {
+                    enabled: true,
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    itemStyle: {
+                        color: '#6B7280',
+                        fontSize: '12px',
+                        fontWeight: '500'
+                    }
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 4,
+                            states: {
+                                hover: {
+                                    enabled: true,
+                                    radius: 6
+                                }
+                            }
+                        },
+                        lineWidth: 3
+                    }
+                },
+                series: [{
+                    name: 'Críticos',
+                    data: [1, 0, 2, 3, 4, 2, 1, 0],
+                    color: '#DC2626',
+                    marker: {
+                        fillColor: '#DC2626'
+                    }
+                }, {
+                    name: 'Médios',
+                    data: [2, 1, 3, 4, 6, 3, 2, 1],
+                    color: '#EA580C',
+                    marker: {
+                        fillColor: '#EA580C'
+                    }
+                }, {
+                    name: 'Baixos',
+                    data: [3, 2, 4, 6, 8, 5, 3, 2],
+                    color: '#F59E0B',
+                    marker: {
+                        fillColor: '#F59E0B'
+                    }
+                }]
+            });
+        });
+    </script>
+
+</body></html>
