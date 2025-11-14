@@ -73,12 +73,6 @@
     a:hover {
       text-decoration: underline;
     }
-    .error {
-      color: #d62828;
-      font-size: 14px;
-      margin-top: 10px;
-      display: none;
-    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -87,19 +81,19 @@
 </head>
 <body>
   <div class="container" id="login-page">
-    <img src="logo.png" alt="Logo MAPSOS" />
+    <img src="logo.jpg" alt="Logo MAPSOS" />
     <h2>Bem-vindo ao MAPSOS</h2>
     <form id="login-form">
-      <input type="text" id="usuario" placeholder="Usuário" required />
-      <input type="password" id="senha" placeholder="Senha" required />
+      <input type="email" id="email-login" placeholder="E-mail" required />
+      <input type="password" id="senha-login" placeholder="Senha" required />
       <button type="submit">Entrar</button>
-      <p class="error" id="erro-msg">Usuário ou senha incorretos!</p>
     </form>
     <p>Esqueceu sua senha? <a href="#" id="link-recuperar">Recuperar</a></p>
+    <p>Ainda não tem conta? <a href="#" id="link-registrar">Registrar-se</a></p>
   </div>
 
   <div class="container" id="recuperar-page" style="display: none;">
-    <img src="logo.png" alt="Logo MAPSOS" />
+    <img src="logo.jpg" alt="Logo MAPSOS" />
     <h2>Recuperar Senha</h2>
     <form id="recuperar-form">
       <input type="email" id="email" placeholder="Digite seu e-mail" required />
@@ -108,47 +102,153 @@
     <p><a href="#" id="link-voltar">Voltar ao login</a></p>
   </div>
 
+  <div class="container" id="registrar-page" style="display: none;">
+    <img src="logo.jpg" alt="Logo MAPSOS" />
+    <h2>Registrar Conta</h2>
+    <form id="registrar-form">
+      <input type="text" id="nome-reg" placeholder="Nome de usuário" required />
+      <input type="email" id="email-reg" placeholder="E-mail" required />
+      <input type="password" id="senha-reg" placeholder="Senha (mín. 6 caracteres)" required />
+      <button type="submit">Registrar</button>
+    </form>
+    <p>Já tem conta? <a href="#" id="link-voltar-login">Voltar ao login</a></p>
+  </div>
+
   <script>
     const loginForm = document.getElementById('login-form');
-    const erroMsg = document.getElementById('erro-msg');
     const loginPage = document.getElementById('login-page');
     const recuperarPage = document.getElementById('recuperar-page');
     const linkRecuperar = document.getElementById('link-recuperar');
     const linkVoltar = document.getElementById('link-voltar');
 
-    // Login simples e redirecionamento
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const usuario = document.getElementById('usuario').value;
-      const senha = document.getElementById('senha').value;
-
-      if (usuario === 'admin' && senha === '1234') {
-        erroMsg.style.display = 'none';
-        // Redirecionar para o dashboard
-        window.location.href = "dashboard.html";
-      } else {
-        erroMsg.style.display = 'block';
-      }
-    });
+    // Referências aos elementos
+    const linkRegistrar = document.getElementById('link-registrar');
+    const registrarPage = document.getElementById('registrar-page');
+    const linkVoltarLogin = document.getElementById('link-voltar-login');
 
     // Alternar entre login e recuperação
-    linkRecuperar.addEventListener('click', () => {
+    linkRecuperar.addEventListener('click', (e) => {
+      e.preventDefault();
       loginPage.style.display = 'none';
       recuperarPage.style.display = 'block';
     });
 
-    linkVoltar.addEventListener('click', () => {
+    linkVoltar.addEventListener('click', (e) => {
+      e.preventDefault();
       recuperarPage.style.display = 'none';
       loginPage.style.display = 'block';
     });
 
-    // Simulação de recuperação de senha
-    document.getElementById('recuperar-form').addEventListener('submit', (e) => {
+    // Alternar para registrar
+    linkRegistrar.addEventListener('click', (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      alert(`Um link de recuperação foi enviado para ${email}`);
-      recuperarPage.style.display = 'none';
+      loginPage.style.display = 'none';
+      registrarPage.style.display = 'block';
+    });
+
+    linkVoltarLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      registrarPage.style.display = 'none';
       loginPage.style.display = 'block';
+    });
+
+    // -- Firebase: scripts e lógica são adicionados abaixo --
+  </script>
+
+  <script type="module">
+    // SDK modular via CDN
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    // Configuração fornecida pelo usuário (mapsos-f4011)
+    const firebaseConfig = {
+      apiKey: "AIzaSyA88YeDjFX5U8kWl_9_w8UR8Unq24vZ1gk",
+      authDomain: "mapsos-f4011.firebaseapp.com",
+      databaseURL: "https://mapsos-f4011-default-rtdb.firebaseio.com",
+      projectId: "mapsos-f4011",
+      storageBucket: "mapsos-f4011.firebasestorage.app",
+      messagingSenderId: "899919188396",
+      appId: "1:899919188396:web:38b6061073dd845ccb6a09"
+    };
+
+    // Inicializa o Firebase modular
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Login com Firebase Auth (modular)
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email-login').value.trim().toLowerCase();
+      const senha = document.getElementById('senha-login').value;
+      console.log('Tentando login com email:', email, 'senha:', senha.length, 'caracteres');
+      try {
+        const userCred = await signInWithEmailAndPassword(auth, email, senha);
+        console.log('Login bem-sucedido:', userCred.user.email);
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        console.error('Erro login completo:', err);
+        alert('Erro ao entrar: ' + err.message);
+      }
+    });
+
+    // Registro de novo usuário e salvar perfil no Firestore (modular)
+    document.getElementById('registrar-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome-reg').value.trim();
+      const email = document.getElementById('email-reg').value.trim().toLowerCase();
+      const senha = document.getElementById('senha-reg').value;
+      console.log('Tentando registrar:', email);
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, senha);
+        const uid = userCred.user.uid;
+        console.log('Usuário criado:', uid);
+        await setDoc(doc(db, 'usuarios', uid), {
+          nome: nome,
+          email: email,
+          criadoEm: serverTimestamp()
+        });
+        console.log('Perfil salvo no Firestore');
+        alert('Registro efetuado com sucesso!');
+        // Limpar formulário de registro
+        document.getElementById('registrar-form').reset();
+        // Redirecionar para página de login
+        setTimeout(() => {
+          registrarPage.style.display = 'none';
+          loginPage.style.display = 'block';
+          // Limpar campos de login também para evitar pré-preenchimento
+          document.getElementById('email-login').value = '';
+          document.getElementById('senha-login').value = '';
+        }, 500);
+      } catch (err) {
+        console.error('Erro registrar:', err);
+        // Verificar se é erro de email já existente
+        if (err.code === 'auth/email-already-in-use') {
+          alert('Este e-mail já está registrado. Por favor, use outro e-mail ou faça login com suas credenciais.');
+        } else if (err.code === 'auth/weak-password') {
+          alert('A senha é muito fraca. Use pelo menos 6 caracteres.');
+        } else if (err.code === 'auth/invalid-email') {
+          alert('E-mail inválido. Verifique e tente novamente.');
+        } else {
+          alert('Erro ao registrar: ' + err.message);
+        }
+      }
+    });
+
+    // Recuperação de senha via Firebase (modular)
+    document.getElementById('recuperar-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert(`Um link de recuperação foi enviado para ${email}`);
+        recuperarPage.style.display = 'none';
+        loginPage.style.display = 'block';
+      } catch (err) {
+        console.error('Erro recuperar senha:', err);
+        alert('Erro ao enviar e-mail de recuperação: ' + err.message);
+      }
     });
   </script>
 </body>

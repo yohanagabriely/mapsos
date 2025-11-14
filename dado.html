@@ -1,10 +1,12 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -16,8 +18,8 @@
                         inter: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'primary': '#067D87', /* Verde-água */
-                        'primary-dark': '#B91C1C', /* Manter a cor escura para outros elementos */
+                        'primary': '#067D87',
+                        'primary-dark': '#B91C1C',
                         'secondary': '#EA580C',
                         'accent': '#F59E0B',
                         'success': '#10B981',
@@ -34,39 +36,46 @@
             }
         }
     </script>
-    <style>::-webkit-scrollbar { display: none;}</style>
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
 <body class="bg-gray-50 font-inter min-h-screen">
 
-   <!-- Sidebar -->
-    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-xl shadow-lg border border-gray-200">
+        <i class="fa-solid fa-bars text-xl text-gray-700"></i>
+    </button>
+
+    <!-- Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
         <div class="p-6">
-            <div class="flex items-center space-x-3 mb-8">
+            <div class="flex items-center justify-between mb-8">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
                     <p class="text-sm text-gray-500">Sistema de Detecção</p>
                 </div>
+                <button id="close-sidebar-btn" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
             </div>
             <nav class="space-y-3">
-                <!-- Mapa (link para mapa.html) -->
-                <a href="mapa.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                <a href="dashboard.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
                     <i class="fa-solid fa-map text-lg"></i>
                     <span class="font-medium">Mapa</span>
                 </a>
-
-                <!-- Dados (ativo - verde fixo) -->
                 <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
                     <i class="fa-solid fa-database text-lg"></i>
                     <span class="font-semibold">Dados</span>
                 </div>
-
-                <!-- Câmeras (link para camera.html) -->
                 <a href="camera.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
                     <i class="fa-solid fa-camera text-lg"></i>
                     <span class="font-medium">Câmeras</span>
                 </a>
-
-                <!-- Histórico (link para historico.html) -->
                 <a href="historico.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
                     <i class="fa-solid fa-clock-rotate-left text-lg"></i>
                     <span class="font-medium">Histórico</span>
@@ -85,63 +94,57 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="ml-72">
+    <div class="lg:ml-72">
         <!-- Header -->
-        <header id="header" class="bg-white border-b border-gray-200 px-8 py-5 shadow-sm">
+        <header id="header" class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 lg:py-5 shadow-sm">
             <div class="flex justify-between items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900">Painel de Dados</h2>
-                    <p class="text-gray-500 mt-1">Análise e monitoramento de acidentes em tempo real</p>
+                <div class="ml-12 lg:ml-0">
+                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Painel de Dados</h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-1 hidden sm:block">Análise e monitoramento de acidentes em tempo real</p>
                 </div>
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-3 sm:space-x-6">
                     <div class="relative">
-                        <i class="fa-regular fa-bell text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
-                        <span class="absolute -top-2 -right-2 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        <i class="fa-regular fa-bell text-lg sm:text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
+                        <span class="absolute -top-2 -right-2 w-4 h-4 sm:w-5 sm:h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
                     </div>
                     <div class="relative">
-                        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
-                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-12 h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
-                            <div>
-                                <p class="font-semibold text-gray-900">lorena</p>
-                                <p class="text-sm text-gray-500">governo</p>
+                        <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
+                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
+                            <div class="hidden sm:block">
+                                <p class="font-semibold text-gray-900 text-sm lg:text-base">lorena</p>
+                                <p class="text-xs text-gray-500">governo</p>
                             </div>
-                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs sm:text-sm"></i>
                         </div>
                         
                         <!-- Profile Menu Dropdown -->
-                        <div id="profile-menu" class="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50 hidden">
+                        <div id="profile-menu" class="absolute right-0 top-full mt-2 w-56 sm:w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50 hidden">
                             <div class="px-4 py-3 border-b border-gray-100">
                                 <p class="font-semibold text-gray-900">Ana Silva</p>
                                 <p class="text-sm text-gray-500">ana.silva@recife.gov.br</p>
                             </div>
-                            
                             <div class="py-2">
                                 <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
                                     <i class="fa-solid fa-user text-gray-500 w-5"></i>
                                     <span class="ml-3 font-medium">Meu Perfil</span>
                                 </span>
-                                
                                 <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
                                     <i class="fa-solid fa-camera text-gray-500 w-5"></i>
                                     <span class="ml-3 font-medium">Alterar Foto</span>
                                 </span>
-                                
                                 <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
                                     <i class="fa-solid fa-key text-gray-500 w-5"></i>
                                     <span class="ml-3 font-medium">Alterar Senha</span>
                                 </span>
-                                
                                 <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
                                     <i class="fa-solid fa-gear text-gray-500 w-5"></i>
                                     <span class="ml-3 font-medium">Configurações</span>
                                 </span>
-                                
                                 <div class="border-t border-gray-100 mt-2 pt-2">
                                     <span class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
                                         <i class="fa-solid fa-sign-in-alt text-gray-500 w-5"></i>
                                         <span class="ml-3 font-medium">Fazer Login</span>
                                     </span>
-                                    
                                     <span class="flex items-center px-4 py-3 text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
                                         <i class="fa-solid fa-sign-out-alt text-red-500 w-5"></i>
                                         <span class="ml-3 font-medium">Sair</span>
@@ -155,156 +158,161 @@
         </header>
 
         <!-- Main Content -->
-        <main class="p-8">
+        <main class="p-4 sm:p-6 lg:p-8">
             <!-- Stats Summary -->
-            <section id="stats-summary" class="grid grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+            <section id="stats-summary" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
+                <div class="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Acidentes Hoje</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">23</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Acidentes Hoje</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-1 lg:mt-2">23</p>
                         </div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-calendar-day text-2xl text-primary"></i>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-day text-lg sm:text-xl lg:text-2xl text-primary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-success mt-4">-12% vs ontem</p>
+                    <p class="text-xs sm:text-sm text-success mt-2 lg:mt-4">-12% vs ontem</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Casos Ativos</p>
-                            <p class="text-3xl font-bold text-secondary mt-2">8</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Casos Ativos</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-secondary mt-1 lg:mt-2">8</p>
                         </div>
-                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-exclamation-circle text-2xl text-secondary"></i>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-exclamation-circle text-lg sm:text-xl lg:text-2xl text-secondary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">Em atendimento</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2 lg:mt-4">Em atendimento</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Tempo Médio</p>
-                            <p class="text-3xl font-bold text-accent mt-2">4.2min</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Tempo Médio</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-accent mt-1 lg:mt-2">4.2min</p>
                         </div>
-                        <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-clock text-2xl text-accent"></i>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-accent/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-lg sm:text-xl lg:text-2xl text-accent"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-success mt-4">-30s vs média</p>
+                    <p class="text-xs sm:text-sm text-success mt-2 lg:mt-4">-30s vs média</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Taxa Resolução</p>
-                            <p class="text-3xl font-bold text-success mt-2">96.8%</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Taxa Resolução</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-success mt-1 lg:mt-2">96.8%</p>
                         </div>
-                        <div class="w-14 h-14 bg-success/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-check-circle text-2xl text-success"></i>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-success/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-check-circle text-lg sm:text-xl lg:text-2xl text-success"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-success mt-4">+1.2% vs semana</p>
+                    <p class="text-xs sm:text-sm text-success mt-2 lg:mt-4">+1.2% vs semana</p>
                 </div>
             </section>
 
             <!-- Main Content Grid -->
-            <div class="grid grid-cols-5 gap-8">
+            <div class="grid grid-cols-1 xl:grid-cols-5 gap-6 lg:gap-8">
                 <!-- Chart Section -->
-                <section id="chart-section" class="col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-                    <div class="flex justify-between items-center mb-6">
+                <section id="chart-section" class="xl:col-span-2 bg-white rounded-xl lg:rounded-2xl p-4 sm:p-5 lg:p-6 shadow-sm border border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 lg:mb-6 gap-3">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-900">Acidentes por Hora</h3>
-                            <p class="text-sm text-gray-500">Últimas 24 horas</p>
+                            <h3 class="text-lg sm:text-xl font-bold text-gray-900">Acidentes por Hora</h3>
+                            <p class="text-xs sm:text-sm text-gray-500">Últimas 24 horas</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <select class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option>Hoje</option>
                                 <option>Ontem</option>
                                 <option>Última Semana</option>
                             </select>
                         </div>
                     </div>
-                    <div id="incident-chart-container" class="h-80"></div>
+                    <div id="incident-chart-container" class="h-64 sm:h-72 lg:h-80"></div>
                 </section>
 
                 <!-- Recent Accidents List -->
-                <section id="recent-accidents-section" class="col-span-3">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-bold text-gray-900">Últimos Acidentes Detectados</h3>
-                        <div class="flex items-center space-x-4">
-                            <select class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                <section id="recent-accidents-section" class="xl:col-span-3">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 lg:mb-6 gap-3">
+                        <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Últimos Acidentes Detectados</h3>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+                            <select class="w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option>Todas as severidades</option>
                                 <option>Alto</option>
                                 <option>Médio</option>
                                 <option>Baixo</option>
                             </select>
-                            <span class="text-sm text-secondary font-medium cursor-pointer hover:underline">Ver Histórico Completo</span>
+                            <span class="text-xs sm:text-sm text-secondary font-medium cursor-pointer hover:underline">Ver Histórico Completo</span>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <div id="accident-1" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-primary/20">
-                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-red-100 to-red-50 flex items-center justify-center border border-red-200">
-                                <i class="fa-solid fa-car-burst text-2xl text-red-600"></i>
+                    <div class="space-y-3 sm:space-y-4">
+                        <!-- Accident 1 -->
+                        <div id="accident-1" class="bg-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-primary/20">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-red-100 to-red-50 flex items-center justify-center border border-red-200 flex-shrink-0">
+                                <i class="fa-solid fa-car-burst text-xl sm:text-2xl text-red-600"></i>
                             </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-3 mb-1">
-                                    <p class="font-bold text-gray-900 text-lg">Colisão Frontal Grave</p>
+                            <div class="flex-1 w-full">
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <p class="font-bold text-gray-900 text-base sm:text-lg">Colisão Frontal Grave</p>
                                     <span class="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded-full border border-red-200">CRÍTICO</span>
                                 </div>
-                                <p class="text-gray-600 mb-2">Av. Mascarenhas de Morais, próximo ao Shopping</p>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <p class="text-sm sm:text-base text-gray-600 mb-2">Av. Mascarenhas de Morais, próximo ao Shopping</p>
+                                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
                                     <span><i class="fa-solid fa-clock mr-1"></i>8 min atrás</span>
                                     <span><i class="fa-solid fa-ambulance mr-1"></i>Ambulância a caminho</span>
                                     <span><i class="fa-solid fa-users mr-1"></i>3 vítimas</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
+                            <div class="w-full sm:w-auto">
+                                <button class="w-full sm:w-auto bg-primary text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-primary-dark transition-colors">
                                     Ver Detalhes
                                 </button>
                             </div>
                         </div>
-                        <div id="accident-2" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-secondary/20">
-                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center border border-orange-200">
-                                <i class="fa-solid fa-person-falling text-2xl text-orange-600"></i>
+
+                        <!-- Accident 2 -->
+                        <div id="accident-2" class="bg-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-secondary/20">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center border border-orange-200 flex-shrink-0">
+                                <i class="fa-solid fa-person-falling text-xl sm:text-2xl text-orange-600"></i>
                             </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-3 mb-1">
-                                    <p class="font-bold text-gray-900 text-lg">Atropelamento</p>
+                            <div class="flex-1 w-full">
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <p class="font-bold text-gray-900 text-base sm:text-lg">Atropelamento</p>
                                     <span class="text-xs font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-full border border-orange-200">MÉDIO</span>
                                 </div>
-                                <p class="text-gray-600 mb-2">Rua da Aurora, cruzamento com Rua do Sol</p>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <p class="text-sm sm:text-base text-gray-600 mb-2">Rua da Aurora, cruzamento com Rua do Sol</p>
+                                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
                                     <span><i class="fa-solid fa-clock mr-1"></i>32 min atrás</span>
                                     <span><i class="fa-solid fa-check-circle mr-1 text-success"></i>Socorro prestado</span>
                                     <span><i class="fa-solid fa-user mr-1"></i>1 vítima</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <div class="w-full sm:w-auto">
+                                <button class="w-full sm:w-auto bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-gray-200 transition-colors">
                                     Ver Detalhes
                                 </button>
                             </div>
                         </div>
-                        <div id="accident-3" class="bg-white rounded-xl p-5 flex items-center space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-accent/20">
-                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-100 to-yellow-50 flex items-center justify-center border border-yellow-200">
-                                <i class="fa-solid fa-traffic-light text-2xl text-yellow-600"></i>
+
+                        <!-- Accident 3 -->
+                        <div id="accident-3" class="bg-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-5 border border-gray-200 hover:shadow-lg transition-all duration-200 hover:border-accent/20">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-xl bg-gradient-to-br from-yellow-100 to-yellow-50 flex items-center justify-center border border-yellow-200 flex-shrink-0">
+                                <i class="fa-solid fa-traffic-light text-xl sm:text-2xl text-yellow-600"></i>
                             </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-3 mb-1">
-                                    <p class="font-bold text-gray-900 text-lg">Semáforo com Defeito</p>
+                            <div class="flex-1 w-full">
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <p class="font-bold text-gray-900 text-base sm:text-lg">Semáforo com Defeito</p>
                                     <span class="text-xs font-bold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full border border-yellow-200">BAIXO</span>
                                 </div>
-                                <p class="text-gray-600 mb-2">Cruzamento Av. Agamenon Magalhães</p>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <p class="text-sm sm:text-base text-gray-600 mb-2">Cruzamento Av. Agamenon Magalhães</p>
+                                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
                                     <span><i class="fa-solid fa-clock mr-1"></i>1h 15min atrás</span>
                                     <span><i class="fa-solid fa-tools mr-1"></i>Manutenção notificada</span>
                                     <span><i class="fa-solid fa-exclamation-triangle mr-1"></i>Trânsito lento</span>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                            <div class="w-full sm:w-auto">
+                                <button class="w-full sm:w-auto bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-gray-200 transition-colors">
                                     Ver Detalhes
                                 </button>
                             </div>
@@ -316,6 +324,26 @@
     </div>
 
     <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
         // Profile menu toggle functionality
         function toggleProfileMenu() {
             const profileMenu = document.getElementById('profile-menu');
@@ -351,7 +379,7 @@
                     labels: {
                         style: {
                             color: '#6B7280',
-                            fontSize: '12px',
+                            fontSize: '11px',
                             fontWeight: '500'
                         }
                     },
@@ -363,14 +391,14 @@
                         text: 'Número de Ocorrências',
                         style: {
                             color: '#6B7280',
-                            fontSize: '13px',
+                            fontSize: '12px',
                             fontWeight: '500'
                         }
                     },
                     labels: {
                         style: {
                             color: '#6B7280',
-                            fontSize: '12px'
+                            fontSize: '11px'
                         }
                     },
                     gridLineColor: '#F3F4F6'
@@ -382,7 +410,7 @@
                     shadow: true,
                     style: {
                         color: '#1F2937',
-                        fontSize: '13px'
+                        fontSize: '12px'
                     },
                     shared: true,
                     valueSuffix: ' acidentes'
@@ -393,7 +421,7 @@
                     verticalAlign: 'bottom',
                     itemStyle: {
                         color: '#6B7280',
-                        fontSize: '12px',
+                        fontSize: '11px',
                         fontWeight: '500'
                     }
                 },
@@ -402,15 +430,15 @@
                         marker: {
                             enabled: true,
                             symbol: 'circle',
-                            radius: 4,
+                            radius: 3,
                             states: {
                                 hover: {
                                     enabled: true,
-                                    radius: 6
+                                    radius: 5
                                 }
                             }
                         },
-                        lineWidth: 3
+                        lineWidth: 2.5
                     }
                 },
                 series: [{
@@ -439,4 +467,5 @@
         });
     </script>
 
-</body></html>
+</body>
+</html>

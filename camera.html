@@ -1,10 +1,12 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -16,8 +18,8 @@
                         inter: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'primary': '#067D87', /* Verde-água */
-                        'primary-dark': '#B91C1C', /* Manter a cor escura para outros elementos */
+                        'primary': '#067D87',
+                        'primary-dark': '#B91C1C',
                         'secondary': '#EA580C',
                         'accent': '#F59E0B',
                         'success': '#10B981',
@@ -34,42 +36,57 @@
             }
         }
     </script>
-    <style>::-webkit-scrollbar { display: none;}</style>
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
 <body class="bg-gray-50 font-inter min-h-screen">
 
+   <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-xl shadow-lg border border-gray-200">
+        <i class="fa-solid fa-bars text-xl text-gray-700"></i>
+    </button>
+
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
+
    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40">
+    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
         <div class="p-6">
-            <div class="flex items-center space-x-3 mb-8">
-            
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
-                    <p class="text-sm text-gray-500">Sistema de Detecção</p>
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
+                        <p class="text-sm text-gray-500">Sistema de Detecção</p>
+                    </div>
                 </div>
+                <button id="close-sidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
             </div>
+            
         <nav class="space-y-3">
-    <!-- Mapa com link para mapa.html -->
-    <a href="mapa.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 cursor-pointer transition-colors">
-        <i class="fa-solid fa-map text-lg"></i>
-        <span class="font-medium">Mapa</span>
-    </a>
+            <a href="dashboard.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 cursor-pointer transition-colors">
+                <i class="fa-solid fa-map text-lg"></i>
+                <span class="font-medium">Mapa</span>
+            </a>
 
-    <div class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 cursor-pointer transition-colors">
-        <i class="fa-solid fa-database text-lg"></i>
-        <span class="font-medium">Dados</span>
-    </div>
+            <a href="dado.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 cursor-pointer transition-colors">
+                <i class="fa-solid fa-database text-lg"></i>
+                <span class="font-medium">Dados</span>
+            </a>
 
-    <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
-        <i class="fa-solid fa-camera text-lg"></i>
-        <span class="font-semibold">Câmeras</span>
-    </div>
+            <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
+                <i class="fa-solid fa-camera text-lg"></i>
+                <span class="font-semibold">Câmeras</span>
+            </div>
 
-   <a href="historico.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
-        <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-        <span class="font-medium">Histórico</span>
-    </a>
-</nav>
+           <a href="historico.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+                <span class="font-medium">Histórico</span>
+            </a>
+        </nav>
 
         </div>
         <div class="absolute bottom-6 left-6 right-6">
@@ -84,27 +101,27 @@
     </aside>
 
     <!-- Main Content -->
-    <div class="ml-72">
+    <div class="lg:ml-72">
         <!-- Header -->
-        <header id="header" class="bg-white border-b border-gray-200 px-8 py-5 shadow-sm">
+        <header id="header" class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 lg:py-5 shadow-sm">
             <div class="flex justify-between items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900">Histórico de Acidentes</h2>
-                    <p class="text-gray-500 mt-1">Registro completo de ocorrências detectadas</p>
+                <div class="ml-12 lg:ml-0">
+                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Câmeras</h2>
+                    <p class="text-gray-500 mt-1 text-sm sm:text-base hidden sm:block">Monitoramento em tempo real</p>
                 </div>
-                <div class="flex items-center space-x-6">
-                    <div class="relative">
+                <div class="flex items-center space-x-3 sm:space-x-6">
+                    <div class="relative hidden sm:block">
                         <i class="fa-regular fa-bell text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
                         <span class="absolute -top-2 -right-2 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
                     </div>
                     <div class="relative">
-                        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
-                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-12 h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
-                            <div>
+                        <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
+                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
+                            <div class="hidden sm:block">
                                 <p class="font-semibold text-gray-900">lorena</p>
                                 <p class="text-sm text-gray-500">governo</p>
                             </div>
-                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm hidden sm:block"></i>
                         </div>
                         
                         <!-- Profile Menu Dropdown -->
@@ -152,85 +169,82 @@
                 </div>
             </div>
         </header>
-
-        <!-- ... existing code ... -->
         
         <!-- History Main Content -->
-        <main class="p-8">
- <!-- Camera Stats -->
-            <section id="camera-stats" class="grid grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <main class="p-4 sm:p-6 lg:p-8">
+            <!-- Camera Stats -->
+            <section id="camera-stats" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Câmeras Ativas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">247</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Câmeras Ativas</p>
+                            <p class="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">247</p>
                         </div>
-                        <div class="w-14 h-14 bg-success/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-video text-2xl text-success"></i>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-success/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-video text-lg sm:text-2xl text-success"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-success mt-4">+12 esta semana</p>
+                    <p class="text-xs sm:text-sm text-success mt-2 sm:mt-4">+12 esta semana</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Gravações Hoje</p>
-                            <p class="text-3xl font-bold text-primary mt-2">34</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Gravações Hoje</p>
+                            <p class="text-2xl sm:text-3xl font-bold text-primary mt-2">34</p>
                         </div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-record-vinyl text-2xl text-primary"></i>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-record-vinyl text-lg sm:text-2xl text-primary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">Últimas 24h</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-4">Últimas 24h</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Armazenamento</p>
-                            <p class="text-3xl font-bold text-secondary mt-2">2.4TB</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Armazenamento</p>
+                            <p class="text-2xl sm:text-3xl font-bold text-secondary mt-2">2.4TB</p>
                         </div>
-                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-database text-2xl text-secondary"></i>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-database text-lg sm:text-2xl text-secondary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">78% utilizado</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-4">78% utilizado</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Qualidade Média</p>
-                            <p class="text-3xl font-bold text-accent mt-2">4K</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Qualidade Média</p>
+                            <p class="text-2xl sm:text-3xl font-bold text-accent mt-2">4K</p>
                         </div>
-                        <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-eye text-2xl text-accent"></i>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 bg-accent/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-eye text-lg sm:text-2xl text-accent"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">Ultra HD</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-4">Ultra HD</p>
                 </div>
             </section>
 
             <!-- Camera Recordings Grid -->
             <section id="camera-recordings" class="bg-white rounded-2xl shadow-sm border border-gray-200">
-                <div class="p-6 border-b border-gray-200">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-gray-900">Gravações de Acidentes</h3>
-                        <div class="flex items-center space-x-3">
-                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                <div class="p-4 sm:p-6 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900">Gravações de Acidentes</h3>
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary w-full sm:w-auto">
                                 <option>Todas as câmeras</option>
                                 <option>Centro</option>
                                 <option>Boa Viagem</option>
                                 <option>Imbiribeira</option>
                             </select>
-                            <button class="bg-[#067D87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#05666f] transition-colors">
-    <i class="fa-solid fa-download mr-2"></i>Baixar Selecionadas
-</button>
-
+                            <button class="bg-[#067D87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#05666f] transition-colors w-full sm:w-auto">
+                                <i class="fa-solid fa-download mr-2"></i>Baixar Selecionadas
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-6">
-                    <div class="grid grid-cols-3 gap-6">
+                <div class="p-4 sm:p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                         <!-- Recording Card 1 -->
                         <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-shadow">
                             <div class="relative mb-4">
@@ -351,6 +365,26 @@
     </div>
 
     <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closeSidebarFn() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeSidebar.addEventListener('click', closeSidebarFn);
+        overlay.addEventListener('click', closeSidebarFn);
+
         // Profile menu toggle functionality
         function toggleProfileMenu() {
             const profileMenu = document.getElementById('profile-menu');
@@ -366,125 +400,7 @@
                 profileMenu.classList.add('hidden');
             }
         });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            Highcharts.chart('incident-chart-container', {
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'transparent',
-                    height: '100%',
-                },
-                title: {
-                    text: 'Acidentes nas Últimas 24 Horas',
-                    align: 'left',
-                    style: {
-                        color: '#1F2937',
-                        fontSize: '20px',
-                        fontWeight: '700'
-                    }
-                },
-                subtitle: {
-                    text: 'Detecção automática em tempo real',
-                    align: 'left',
-                    style: {
-                        color: '#6B7280',
-                        fontSize: '14px'
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                xAxis: {
-                    categories: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-                    labels: {
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '12px',
-                            fontWeight: '500'
-                        }
-                    },
-                    lineColor: '#E5E7EB',
-                    tickColor: '#E5E7EB'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Número de Ocorrências',
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '13px',
-                            fontWeight: '500'
-                        }
-                    },
-                    labels: {
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '12px'
-                        }
-                    },
-                    gridLineColor: '#F3F4F6'
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    borderColor: '#067D87',
-                    borderRadius: 8,
-                    shadow: true,
-                    style: {
-                        color: '#1F2937',
-                        fontSize: '13px'
-                    },
-                    shared: true,
-                    valueSuffix: ' acidentes'
-                },
-                legend: {
-                    enabled: true,
-                    align: 'right',
-                    verticalAlign: 'top',
-                    itemStyle: {
-                        color: '#6B7280',
-                        fontSize: '12px',
-                        fontWeight: '500'
-                    }
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: true,
-                            symbol: 'circle',
-                            radius: 4,
-                            states: {
-                                hover: {
-                                    enabled: true,
-                                    radius: 6
-                                }
-                            }
-                        },
-                        lineWidth: 3
-                    }
-                },
-                series: [{
-                    name: 'Graves',
-                    data: [1, 0, 3, 5, 7, 4, 2, 1],
-                    color: '#067D87',
-                    marker: {
-                        fillColor: '#067D87'
-                    }
-                }, {
-                    name: 'Moderados',
-                    data: [2, 1, 4, 6, 8, 5, 3, 2],
-                    color: '#EA580C',
-                    marker: {
-                        fillColor: '#EA580C'
-                    }
-                }, {
-                    name: 'Leves',
-                    data: [3, 2, 5, 8, 12, 7, 4, 3],
-                    color: '#F59E0B',
-                    marker: {
-                        fillColor: '#F59E0B'
-                    }
-                }]
-            });
-        });
     </script>
 
-</body></html>
+</body>
+</html>

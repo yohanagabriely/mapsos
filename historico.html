@@ -1,10 +1,12 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -16,8 +18,8 @@
                         inter: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'primary': '#067D87', /* Verde-água */
-                        'primary-dark': '#B91C1C', /* Manter a cor escura para outros elementos */
+                        'primary': '#067D87',
+                        'primary-dark': '#B91C1C',
                         'secondary': '#EA580C',
                         'accent': '#F59E0B',
                         'success': '#10B981',
@@ -34,49 +36,56 @@
             }
         }
     </script>
-    <style>::-webkit-scrollbar { display: none;}</style>
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
 <body class="bg-gray-50 font-inter min-h-screen">
 
-   <!-- Sidebar -->
-    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="lg:hidden fixed top-4 left-4 z-50 bg-white p-3 rounded-lg shadow-lg border border-gray-200">
+        <i class="fa-solid fa-bars text-xl text-gray-700"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed left-0 top-0 w-72 h-screen bg-white border-r border-gray-200 shadow-xl z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
         <div class="p-6">
-            <div class="flex items-center space-x-3 mb-8">
-            
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
-                    <p class="text-sm text-gray-500">Sistema de Detecção</p>
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Alerta Recife</h1>
+                        <p class="text-sm text-gray-500">Sistema de Detecção</p>
+                    </div>
                 </div>
+                <button id="close-sidebar" class="lg:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
             </div>
-<nav class="space-y-3">
-    <!-- Mapa (link para mapa.html) -->
-    <a href="mapa.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
-        <i class="fa-solid fa-map text-lg"></i>
-        <span class="font-medium">Mapa</span>
-    </a>
+            
+            <nav class="space-y-3">
+                <a href="dashboard.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-map text-lg"></i>
+                    <span class="font-medium">Mapa</span>
+                </a>
 
-    <!-- Dados (link para dado.html) -->
-    <a href="dado.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
-        <i class="fa-solid fa-database text-lg"></i>
-        <span class="font-medium">Dados</span>
-    </a>
+                <a href="dado.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-database text-lg"></i>
+                    <span class="font-medium">Dados</span>
+                </a>
 
-    <!-- Câmeras (link para camera.html) -->
-    <a href="camera.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
-        <i class="fa-solid fa-camera text-lg"></i>
-        <span class="font-medium">Câmeras</span>
-    </a>
+                <a href="camera.html" class="flex items-center space-x-4 px-4 py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-camera text-lg"></i>
+                    <span class="font-medium">Câmeras</span>
+                </a>
 
-    <!-- Histórico (ativo - verde fixo) -->
-    <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
-        <i class="fa-solid fa-clock-rotate-left text-lg"></i>
-        <span class="font-semibold">Histórico</span>
-    </div>
-</nav>
-
-
+                <div class="flex items-center space-x-4 px-4 py-4 rounded-xl bg-[#067D87] text-white cursor-pointer shadow-lg">
+                    <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+                    <span class="font-semibold">Histórico</span>
+                </div>
             </nav>
         </div>
+        
         <div class="absolute bottom-6 left-6 right-6">
             <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-4 border border-primary/20">
                 <div class="flex items-center space-x-3">
@@ -88,31 +97,33 @@
         </div>
     </aside>
 
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden"></div>
+
     <!-- Main Content -->
-    <div class="ml-72">
+    <div class="lg:ml-72">
         <!-- Header -->
-        <header id="header" class="bg-white border-b border-gray-200 px-8 py-5 shadow-sm">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900">Histórico de Acidentes</h2>
-                    <p class="text-gray-500 mt-1">Registro completo de ocorrências detectadas</p>
+        <header id="header" class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4 lg:py-5 shadow-sm">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div class="ml-12 lg:ml-0">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-gray-900">Histórico de Acidentes</h2>
+                    <p class="text-sm lg:text-base text-gray-500 mt-1">Registro completo de ocorrências detectadas</p>
                 </div>
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-4 lg:space-x-6 ml-auto">
                     <div class="relative">
-                        <i class="fa-regular fa-bell text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
+                        <i class="fa-regular fa-bell text-lg lg:text-xl text-gray-600 cursor-pointer hover:text-primary transition-colors"></i>
                         <span class="absolute -top-2 -right-2 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">3</span>
                     </div>
                     <div class="relative">
-                        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
-                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-12 h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
-                            <div>
+                        <div class="flex items-center space-x-2 lg:space-x-3 cursor-pointer" onclick="toggleProfileMenu()">
+                            <img src="https://www.publicdomainpictures.net/pictures/180000/velka/cat-1464103447LmK.jpg" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-3 border-primary shadow-md" alt="User Avatar">
+                            <div class="hidden sm:block">
                                 <p class="font-semibold text-gray-900">lorena</p>
                                 <p class="text-sm text-gray-500">governo</p>
                             </div>
-                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm"></i>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-sm hidden sm:block"></i>
                         </div>
                         
-                        <!-- Profile Menu Dropdown -->
                         <div id="profile-menu" class="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 z-50 hidden">
                             <div class="px-4 py-3 border-b border-gray-100">
                                 <p class="font-semibold text-gray-900">Ana Silva</p>
@@ -157,25 +168,23 @@
                 </div>
             </div>
         </header>
-
-        <!-- ... existing code ... -->
         
         <!-- History Main Content -->
-        <main class="p-8">
+        <main class="p-4 sm:p-6 lg:p-8">
             <!-- Filters Section -->
-            <section id="filters-section" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-8">
-                <div class="grid grid-cols-6 gap-4 items-end">
+            <section id="filters-section" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-200 mb-6 lg:mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 items-end">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Data Inicial</label>
-                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Data Final</label>
-                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Severidade</label>
-                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                             <option>Todas</option>
                             <option>Crítico</option>
                             <option>Alto</option>
@@ -185,7 +194,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Região</label>
-                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                             <option>Todas as regiões</option>
                             <option>Centro</option>
                             <option>Boa Viagem</option>
@@ -195,7 +204,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
                             <option>Todos</option>
                             <option>Resolvido</option>
                             <option>Em Andamento</option>
@@ -203,79 +212,77 @@
                         </select>
                     </div>
                     <div>
-                       <button class="w-full bg-[#067D87] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#05666f] transition-colors">
-    <i class="fa-solid fa-search mr-2"></i>Filtrar
-</button>
-
+                        <button class="w-full bg-[#067D87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#05666f] transition-colors">
+                            <i class="fa-solid fa-search mr-2"></i>Filtrar
+                        </button>
                     </div>
                 </div>
             </section>
 
             <!-- Stats Summary -->
-            <section id="history-stats" class="grid grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+            <section id="history-stats" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                <div class="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Total de Acidentes</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">1,247</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Total de Acidentes</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">1,247</p>
                         </div>
-                        <div class="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-list text-2xl text-gray-600"></i>
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-gray-100 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-list text-xl lg:text-2xl text-gray-600"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">Últimos 30 dias</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-3 lg:mt-4">Últimos 30 dias</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Casos Críticos</p>
-                            <p class="text-3xl font-bold text-primary mt-2">89</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Casos Críticos</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-primary mt-2">89</p>
                         </div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-exclamation-triangle text-2xl text-primary"></i>
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-exclamation-triangle text-xl lg:text-2xl text-primary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">7.1% do total</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-3 lg:mt-4">7.1% do total</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Taxa Resolução</p>
-                            <p class="text-3xl font-bold text-success mt-2">94.2%</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Taxa Resolução</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-success mt-2">94.2%</p>
                         </div>
-                        <div class="w-14 h-14 bg-success/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-check-circle text-2xl text-success"></i>
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-success/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-check-circle text-xl lg:text-2xl text-success"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">+2.3% vs mês anterior</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-3 lg:mt-4">+2.3% vs mês anterior</p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+                <div class="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500 text-sm font-medium">Tempo Médio</p>
-                            <p class="text-3xl font-bold text-secondary mt-2">6.4min</p>
+                            <p class="text-gray-500 text-xs sm:text-sm font-medium">Tempo Médio</p>
+                            <p class="text-2xl lg:text-3xl font-bold text-secondary mt-2">6.4min</p>
                         </div>
-                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-clock text-2xl text-secondary"></i>
+                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-xl lg:text-2xl text-secondary"></i>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-4">Resposta média</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-3 lg:mt-4">Resposta média</p>
                 </div>
             </section>
 
             <!-- History Table -->
             <section id="history-table-section" class="bg-white rounded-2xl shadow-sm border border-gray-200">
-                <div class="p-6 border-b border-gray-200">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-gray-900">Registro de Ocorrências</h3>
-                        <div class="flex items-center space-x-3">
+                <div class="p-4 sm:p-6 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <h3 class="text-lg lg:text-xl font-bold text-gray-900">Registro de Ocorrências</h3>
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                             <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                                 <i class="fa-solid fa-download mr-2"></i>Exportar CSV
                             </button>
-                           <button class="bg-[#067D87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#056973] transition-colors">
-    <i class="fa-solid fa-file-pdf mr-2"></i>Relatório PDF
-</button>
-
+                            <button class="bg-[#067D87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#056973] transition-colors">
+                                <i class="fa-solid fa-file-pdf mr-2"></i>Relatório PDF
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -284,83 +291,83 @@
                     <table class="w-full">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data/Hora</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severidade</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tempo Resposta</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data/Hora</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severidade</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Status</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Tempo</th>
+                                <th class="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                                     <div>15/10/2024</div>
                                     <div class="text-xs text-gray-500">14:32</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <i class="fa-solid fa-car-burst text-red-500 mr-2"></i>
-                                        <span class="text-sm text-gray-900">Colisão</span>
+                                        <i class="fa-solid fa-car-burst text-red-500 mr-2 text-sm"></i>
+                                        <span class="text-xs lg:text-sm text-gray-900">Colisão</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">Av. Mascarenhas de Morais</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-xs lg:text-sm text-gray-900">Av. Mascarenhas</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">Crítico</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap hidden sm:table-cell">
                                     <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Resolvido</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3.2 min</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="text-primary hover:text-primary-dark">Ver Detalhes</button>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 hidden md:table-cell">3.2 min</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm font-medium">
+                                    <button class="text-primary hover:text-primary-dark">Ver</button>
                                 </td>
                             </tr>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                                     <div>15/10/2024</div>
                                     <div class="text-xs text-gray-500">12:15</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <i class="fa-solid fa-person-falling text-orange-500 mr-2"></i>
-                                        <span class="text-sm text-gray-900">Atropelamento</span>
+                                        <i class="fa-solid fa-person-falling text-orange-500 mr-2 text-sm"></i>
+                                        <span class="text-xs lg:text-sm text-gray-900">Atropelamento</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">Rua da Aurora</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-xs lg:text-sm text-gray-900">Rua da Aurora</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <span class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 rounded-full">Alto</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap hidden sm:table-cell">
                                     <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Resolvido</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5.8 min</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="text-primary hover:text-primary-dark">Ver Detalhes</button>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 hidden md:table-cell">5.8 min</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm font-medium">
+                                    <button class="text-primary hover:text-primary-dark">Ver</button>
                                 </td>
                             </tr>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900">
                                     <div>14/10/2024</div>
                                     <div class="text-xs text-gray-500">18:45</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <i class="fa-solid fa-traffic-light text-yellow-500 mr-2"></i>
-                                        <span class="text-sm text-gray-900">Semáforo</span>
+                                        <i class="fa-solid fa-traffic-light text-yellow-500 mr-2 text-sm"></i>
+                                        <span class="text-xs lg:text-sm text-gray-900">Semáforo</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">Av. Agamenon Magalhães</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 text-xs lg:text-sm text-gray-900">Av. Agamenon</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                                     <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Médio</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap hidden sm:table-cell">
                                     <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Em Andamento</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12.5 min</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button class="text-primary hover:text-primary-dark">Ver Detalhes</button>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm text-gray-900 hidden md:table-cell">12.5 min</td>
+                                <td class="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap text-xs lg:text-sm font-medium">
+                                    <button class="text-primary hover:text-primary-dark">Ver</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -371,6 +378,28 @@
     </div>
 
     <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const closeSidebar = document.getElementById('close-sidebar');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebarFunc() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', openSidebar);
+        closeSidebar.addEventListener('click', closeSidebarFunc);
+        sidebarOverlay.addEventListener('click', closeSidebarFunc);
+
         // Profile menu toggle functionality
         function toggleProfileMenu() {
             const profileMenu = document.getElementById('profile-menu');
@@ -386,125 +415,7 @@
                 profileMenu.classList.add('hidden');
             }
         });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            Highcharts.chart('incident-chart-container', {
-                chart: {
-                    type: 'spline',
-                    backgroundColor: 'transparent',
-                    height: '100%',
-                },
-                title: {
-                    text: 'Acidentes nas Últimas 24 Horas',
-                    align: 'left',
-                    style: {
-                        color: '#1F2937',
-                        fontSize: '20px',
-                        fontWeight: '700'
-                    }
-                },
-                subtitle: {
-                    text: 'Detecção automática em tempo real',
-                    align: 'left',
-                    style: {
-                        color: '#6B7280',
-                        fontSize: '14px'
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                xAxis: {
-                    categories: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-                    labels: {
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '12px',
-                            fontWeight: '500'
-                        }
-                    },
-                    lineColor: '#E5E7EB',
-                    tickColor: '#E5E7EB'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Número de Ocorrências',
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '13px',
-                            fontWeight: '500'
-                        }
-                    },
-                    labels: {
-                        style: {
-                            color: '#6B7280',
-                            fontSize: '12px'
-                        }
-                    },
-                    gridLineColor: '#F3F4F6'
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    borderColor: '#067D87',
-                    borderRadius: 8,
-                    shadow: true,
-                    style: {
-                        color: '#1F2937',
-                        fontSize: '13px'
-                    },
-                    shared: true,
-                    valueSuffix: ' acidentes'
-                },
-                legend: {
-                    enabled: true,
-                    align: 'right',
-                    verticalAlign: 'top',
-                    itemStyle: {
-                        color: '#6B7280',
-                        fontSize: '12px',
-                        fontWeight: '500'
-                    }
-                },
-                plotOptions: {
-                    spline: {
-                        marker: {
-                            enabled: true,
-                            symbol: 'circle',
-                            radius: 4,
-                            states: {
-                                hover: {
-                                    enabled: true,
-                                    radius: 6
-                                }
-                            }
-                        },
-                        lineWidth: 3
-                    }
-                },
-                series: [{
-                    name: 'Graves',
-                    data: [1, 0, 3, 5, 7, 4, 2, 1],
-                    color: '#067D87',
-                    marker: {
-                        fillColor: '#067D87'
-                    }
-                }, {
-                    name: 'Moderados',
-                    data: [2, 1, 4, 6, 8, 5, 3, 2],
-                    color: '#EA580C',
-                    marker: {
-                        fillColor: '#EA580C'
-                    }
-                }, {
-                    name: 'Leves',
-                    data: [3, 2, 5, 8, 12, 7, 4, 3],
-                    color: '#F59E0B',
-                    marker: {
-                        fillColor: '#F59E0B'
-                    }
-                }]
-            });
-        });
     </script>
 
-</body></html>
+</body>
+</html>
