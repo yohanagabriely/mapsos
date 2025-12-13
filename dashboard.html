@@ -35,7 +35,7 @@
         ::-webkit-scrollbar { display: none;}
         body { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Garante que o mapa não sobreponha outros elementos */
+        /* Garante que o mapa nÃ£o sobreponha outros elementos */
         #map-container {
             position: relative;
             z-index: 1;
@@ -87,13 +87,13 @@
                     <span class="font-medium text-sm sm:text-base">Dados</span>
                 </a>
 
-                <!-- Câmeras -->
+                <!-- CÃ¢meras -->
                 <a href="camera.html" class="flex items-center space-x-3 sm:space-x-4 px-3 sm:px-4 py-3 sm:py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
                     <i class="fa-solid fa-camera text-base sm:text-lg"></i>
                     <span class="font-medium text-sm sm:text-base">Câmeras</span>
                 </a>
 
-                <!-- Histórico -->
+                <!-- HistÃ³rico -->
                 <a href="historico.html" class="flex items-center space-x-3 sm:space-x-4 px-3 sm:px-4 py-3 sm:py-4 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors">
                     <i class="fa-solid fa-clock-rotate-left text-base sm:text-lg"></i>
                     <span class="font-medium text-sm sm:text-base">Histórico</span>
@@ -123,7 +123,7 @@
                     </button>
                     <div class="min-w-0 flex-1">
                         <h2 class="text-base sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 truncate">Histórico de Acidentes</h2>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1 hidden sm:block">Registro completo de ocorrências detectadas</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1 hidden sm:block">Registro completo de ocorréncias detectadas</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-6 flex-shrink-0">
@@ -149,36 +149,36 @@
                             </div>
                             
                             <div class="py-2">
-                                <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-                                    <i class="fa-solid fa-user text-gray-500 w-4 sm:w-5 text-sm"></i>
-                                    <span class="ml-2 sm:ml-3 font-medium text-sm">Meu Perfil</span>
-                                </span>
+                                <a href="perfil.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+    <i class="fa-solid fa-gear text-gray-500 w-5"></i>
+    <span class="ml-3 font-medium">Meu Perfil</span>
+</a>
                                 
-                                <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-                                    <i class="fa-solid fa-camera text-gray-500 w-4 sm:w-5 text-sm"></i>
-                                    <span class="ml-2 sm:ml-3 font-medium text-sm">Alterar Foto</span>
-                                </span>
+                                <a href="alterar-foto.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+    <i class="fa-solid fa-gear text-gray-500 w-5"></i>
+    <span class="ml-3 font-medium">Alterar Foto</span>
+</a>
                                 
-                                <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-                                    <i class="fa-solid fa-key text-gray-500 w-4 sm:w-5 text-sm"></i>
-                                    <span class="ml-2 sm:ml-3 font-medium text-sm">Alterar Senha</span>
-                                </span>
+                                <a href="alterar-senha.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+    <i class="fa-solid fa-gear text-gray-500 w-5"></i>
+    <span class="ml-3 font-medium">Alterar Senha</span>
                                 
-                                <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-                                    <i class="fa-solid fa-gear text-gray-500 w-4 sm:w-5 text-sm"></i>
-                                    <span class="ml-2 sm:ml-3 font-medium text-sm">Configurações</span>
-                                </span>
+                                <a href="configuracoes.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+    <i class="fa-solid fa-gear text-gray-500 w-5"></i>
+    <span class="ml-3 font-medium">Configurações</span>
+</a>
+
                                 
                                 <div class="border-t border-gray-100 mt-2 pt-2">
-                                    <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-                                        <i class="fa-solid fa-sign-in-alt text-gray-500 w-4 sm:w-5 text-sm"></i>
-                                        <span class="ml-2 sm:ml-3 font-medium text-sm">Fazer Login</span>
-                                    </span>
+                                    <a href="index.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+   
+ <span class="ml-3 font-medium">Fazer login</span>
+</a>
                                     
-                                    <span class="flex items-center px-3 sm:px-4 py-2 sm:py-3 text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
-                                        <i class="fa-solid fa-sign-out-alt text-red-500 w-4 sm:w-5 text-sm"></i>
-                                        <span class="ml-2 sm:ml-3 font-medium text-sm">Sair</span>
-                                    </span>
+                                    <a href="index.html" class="flex items-center px-4 py-3 text-red-600 hover:bg-red-50 transition-colors cursor-pointer">
+                                        <i class="fa-solid fa-sign-out-alt text-red-500 w-5"></i>
+                                        <span class="ml-3 font-medium">Sair</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -456,7 +456,7 @@
                 return;
             }
 
-            // Configuração do mapa
+            // ConfiguraÃ§Ã£o do mapa
             bingMap = new Microsoft.Maps.Map('#map-container', {
                 credentials: BING_MAPS_KEY,
                 center: new Microsoft.Maps.Location(-8.05, -34.9),
@@ -478,7 +478,7 @@
                 addMarkers();
             });
 
-            // Adiciona camada de tráfego
+            // Adiciona camada de trÃ¡fego
             addTrafficLayer();
         }
 
@@ -491,21 +491,21 @@
                     local: "Boa Viagem", 
                     coords: new Microsoft.Maps.Location(-8.125, -34.915), 
                     cor: '#067D87',
-                    icone: '🚨'
+                    icone: 'ðŸš¨'
                 },
                 { 
                     tipo: "Moderado", 
                     local: "Afogados", 
                     coords: new Microsoft.Maps.Location(-8.081, -34.918), 
                     cor: '#EA580C',
-                    icone: '⚠️'
+                    icone: 'âš ï¸'
                 },
                 { 
                     tipo: "Leve", 
                     local: "Imbiribeira", 
                     coords: new Microsoft.Maps.Location(-8.100, -34.900), 
                     cor: '#F59E0B',
-                    icone: 'ℹ️'
+                    icone: 'â„¹ï¸'
                 }
             ];
 
@@ -542,7 +542,7 @@
 
             Microsoft.Maps.loadModule('Microsoft.Maps.Traffic', function() {
                 const trafficManager = new Microsoft.Maps.Traffic.TrafficManager(bingMap);
-                // Mostra camada de tráfego
+                // Mostra camada de trÃ¡fego
                 trafficManager.show();
             });
         }
@@ -569,5 +569,8 @@
             }, 250);
         });
     </script>
+
 </body>
 </html>
+
+
